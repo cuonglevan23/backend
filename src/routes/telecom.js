@@ -1,9 +1,9 @@
 import express from 'express';
-import  getCategory  from '../controllers/category.js';
+import  getTelecom  from '../controllers/telecom.js';
 
 const router = express.Router();
 
-router.get('/', getCategory);
+router.get('/', getTelecom);
 
 
 export default router;

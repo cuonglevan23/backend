@@ -5,14 +5,18 @@ const schema = new mongoose.Schema({
         type: String,
         required: true 
     },
-    ParentId: {
+    UserId: {
         type: int,
         required: true 
     },
-    IsDeleted   : {
+    Exchange: {
         type: String,
+        required: true 
+    },
+    Point: {
+        type: int,
         required: true 
     },
 });
 
-export const categoryModel = mongoose.model('category', schema);
+export const telecomModel = mongoose.model('telecom', schema);

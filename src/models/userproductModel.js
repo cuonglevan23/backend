@@ -1,18 +1,14 @@
 import mongoose from "mongoose";
 
 const schema = new mongoose.Schema({
-    Name: {
+    ProductId: {
         type: String,
         required: true 
     },
-    ParentId: {
+    UserId: {
         type: int,
-        required: true 
-    },
-    IsDeleted   : {
-        type: String,
         required: true 
     },
 });
 
-export const categoryModel = mongoose.model('category', schema);
+export const userproductomModel = mongoose.model('userproduct', schema);

@@ -1,18 +1,14 @@
 import mongoose from "mongoose";
 
 const schema = new mongoose.Schema({
-    Name: {
+    RoleName: {
         type: String,
         required: true 
     },
-    ParentId: {
-        type: int,
-        required: true 
-    },
-    IsDeleted   : {
+    Description: {
         type: String,
         required: true 
     },
 });
 
-export const categoryModel = mongoose.model('category', schema);
+export const rolesModel = mongoose.model('roles', schema);
