@@ -1,5 +1,10 @@
 const mongoose = require("mongoose");
 const productModel = mongoose.Schema({
+  categoryId: {
+    type: mongoose.Types.ObjectId,
+    require: true,
+    ref: "categories",
+  },
   name: {
     type: String,
     require: true,
@@ -13,9 +18,10 @@ const productModel = mongoose.Schema({
     require: true,
   },
   price: {
-    type: String,
+    type: Number,
     require: true,
   },
+
   introduction: {
     type: String,
     require: true,
@@ -27,6 +33,10 @@ const productModel = mongoose.Schema({
   quantity: {
     type: Number,
     require: true,
+  },
+  byPoint: {
+    type: Boolean,
+    default: false,
   },
   isActive: {
     type: Boolean,

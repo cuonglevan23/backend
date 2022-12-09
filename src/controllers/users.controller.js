@@ -3,13 +3,14 @@ const mongoose = require("mongoose");
 
 const userCtrl = {
   createUser: async (req, res) => {
-    const { email, password, firstName, lastName, phoneNumber } = req.body;
+    const { email, password, firstName, lastName, phoneNumber, avatar } =
+      req.body;
     try {
       const existEmail = await User.findOne({ email });
       if (existEmail) {
         return res
           .status(400)
-          .json({ success: false, msg: "Email đã được đăng ký!" });
+          .json({ success: false, msg: "Email đã được sử dụng!" });
       } else {
         const user = new User({
           email,
@@ -17,6 +18,8 @@ const userCtrl = {
           lastName,
           password,
           phoneNumber,
+          avatar,
+          role: 0,
         });
         await user.save();
 
@@ -82,6 +85,26 @@ const userCtrl = {
       console.log(error);
     }
   },
+  adminSignIn: async (req, res) => {
+    const { email, password } = req.body;
+    try {
+      const existEmail = await User.findOne({ email: email });
+      if (!existEmail) {
+        return res
+          .status(400)
+          .json({ success: false, msg: "Email chưa được đăng ký" });
+      }
+      const user = await User.findOne({ email, password, role: 0 });
+      if (!user) {
+        return res
+          .status(400)
+          .json({ success: false, msg: "Đăng nhập thất bại" });
+      }
+      return res.status(200).json({ success: true, user });
+    } catch (error) {
+      console.log(error);
+    }
+  },
   allUser: async (req, res) => {
     try {
       const users = await User.find({}).select(
@@ -89,7 +112,7 @@ const userCtrl = {
       );
       return res.status(200).json(users);
     } catch (error) {
-      console.log("error: ", error);
+      return res.status(400).json({ success: false });
     }
   },
   addPoint: async (req, res) => {
@@ -102,7 +125,28 @@ const userCtrl = {
       });
       return res.status(200).json({ user, success: true });
     } catch (error) {
-      console.log(error);
+      return res.status(400).json({ success: false });
+    }
+  },
+  decrementPoint: async (req, res) => {
+    const { id, point } = req.body;
+    try {
+      const currentPoint = await User.findById(id, "point -_id");
+      const totalPoint = Number(currentPoint.point) - Number(point);
+      await User.findByIdAndUpdate(id, {
+        point: totalPoint,
+      });
+      return res.status(200).json({ success: true });
+    } catch (error) {
+      return res.status(400).json({ success: false });
+    }
+  },
+  getUserNotAdmin: async (req, res) => {
+    try {
+      const users = await User.find({ role: 1 });
+      return res.status(200).json({ users });
+    } catch (error) {
+      return res.status(400).json({ success: false });
     }
   },
   getPricebyId: async (req, res) => {

@@ -4,9 +4,10 @@ require("dotenv").config();
 const cors = require("cors");
 const usersRouter = require("./src/routes/users.routes");
 const productRouter = require("./src/routes/product.routes");
+const orderRouter = require("./src/routes/order.routes");
+const categoryRouter = require("./src/routes/categories.router");
 const mongoose = require("mongoose");
 const app = express();
-const orderRouter = require("./src/routes/order.routes");
 
 app.use(cors());
 app.options("*", cors());
@@ -18,6 +19,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use("/users", usersRouter);
 app.use("/products", productRouter);
 app.use("/order", orderRouter);
+app.use("/categories", categoryRouter);
 app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`);
 });

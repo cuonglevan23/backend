@@ -19,8 +19,9 @@ const userModel = mongoose.Schema(
     },
     // coder, projectManager, leader, admin
     role: {
-      type: String,
+      type: Number,
       require: false,
+      default: 1,
     },
 
     address: {
@@ -33,7 +34,11 @@ const userModel = mongoose.Schema(
     },
     point: {
       type: Number,
-      default: 0,
+      default: 1000,
+    },
+    avatar: {
+      type: String,
+      require: true,
     },
   },
 

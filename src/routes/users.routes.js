@@ -3,10 +3,13 @@ const userCtrl = require("../controllers/users.controller");
 /* GET users listing. */
 router.post("/create-user", userCtrl.createUser);
 router.post("/sign-in", userCtrl.signIn);
+router.post("/admin-signin", userCtrl.adminSignIn);
 router.get("/not-department", userCtrl.showUserNotDepartment);
-router.post("/price", userCtrl.getPricebyId)
+router.post("/price", userCtrl.getPricebyId);
 router.get("/all-user", userCtrl.allUser);
+router.get("/admin-get-user", userCtrl.getUserNotAdmin);
 router.post("/add-point", userCtrl.addPoint);
+router.post("/decrement-point", userCtrl.decrementPoint);
 router.post("/:id", userCtrl.updateUser);
 router.get("/:id", userCtrl.showUserById);
 router.get("/search/:q", userCtrl.searchByEmail);

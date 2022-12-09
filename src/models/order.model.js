@@ -15,7 +15,15 @@ const orderModel = mongoose.Schema({
     require: true,
     default: false,
   },
+  byPoint: {
+    type: Boolean,
+    require: true,
+  },
   isPay: {
+    type: Boolean,
+    default: false,
+  },
+  isAccept: {
     type: Boolean,
     default: false,
   },
