@@ -6,7 +6,10 @@ const usersRouter = require("./src/routes/users.routes");
 const productRouter = require("./src/routes/product.routes");
 const orderRouter = require("./src/routes/order.routes");
 const categoryRouter = require("./src/routes/categories.router");
+const teleservicesRouter = require("./src/routes/teleservices.routes");
+const teleproductRouter = require("./src/routes/teleproduct.routes");
 const mongoose = require("mongoose");
+const { sendMail } = require("./src/utils/sendMail");
 const app = express();
 
 app.use(cors());
@@ -20,11 +23,15 @@ app.use("/users", usersRouter);
 app.use("/products", productRouter);
 app.use("/order", orderRouter);
 app.use("/categories", categoryRouter);
+app.use("/tele-services", teleservicesRouter);
+app.use("/tele-product", teleproductRouter);
 app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`);
 });
 
 const URI = process.env.URI;
+
+// const html = <div>Xin chfo</div>
 
 mongoose.connect(
   URI,

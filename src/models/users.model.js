@@ -40,6 +40,14 @@ const userModel = mongoose.Schema(
       type: String,
       require: true,
     },
+    phone: {
+      type: String,
+      require: true,
+    },
+    address: {
+      type: String,
+      require: true,
+    },
   },
 
   { timestamps: true }

@@ -23,9 +23,13 @@ const orderModel = mongoose.Schema({
     type: Boolean,
     default: false,
   },
+
+  //0:waitting
+  //1:acpeted
+  //2:denied
   isAccept: {
-    type: Boolean,
-    default: false,
+    type: Number,
+    default: 0,
   },
 });
 module.exports = mongoose.model("order", orderModel);

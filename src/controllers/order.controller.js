@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const Order = require("../models/order.model");
+const { sendMail } = require("../utils/sendMail");
 const orderCtrl = {
   createOrder: async (req, res) => {
     const { idUser, idProduct, quantity, byPoint } = req.body;
@@ -24,6 +25,40 @@ const orderCtrl = {
       }
     } catch (error) {
       return res.status(200).json({ success: false });
+    }
+  },
+  sendMail: async (req, res) => {
+    const { email, content, html, text } = req.body;
+    try {
+      sendMail(email, content, html, text);
+      return res.status(200).json({ success: true });
+    } catch (error) {
+      return res.status(400).json({ success: false });
+    }
+  },
+  addQuantity: async (req, res) => {
+    const { id } = req.body;
+    try {
+      const order = await Order.findById(id);
+      order.quantity++;
+      await order.save();
+      return res.status(200).json({ success: true });
+    } catch (error) {
+      return res.status(400).json({ success: false });
+    }
+  },
+  decreQuantity: async (req, res) => {
+    const { id } = req.body;
+    try {
+      const order = await Order.findById(id);
+      if (order.quantity > 1) {
+        order.quantity--;
+        await order.save();
+        return res.status(200).json({ success: true });
+      }
+      return res.status(200).json({ success: true });
+    } catch (error) {
+      return res.status(400).json({ success: false });
     }
   },
   getOrderbyPrice: async (req, res) => {
@@ -64,10 +99,24 @@ const orderCtrl = {
     }
   },
 
+  getHistoryOrder: async (req, res) => {
+    const { id } = req.body;
+    try {
+      const orders = await Order.find({
+        idUser: id,
+        isPay: true,
+        byPoint: false,
+      }).populate("idProduct");
+      return res.status(200).json({ orders });
+    } catch (error) {
+      return res.status(400).json({ success: false });
+    }
+  },
+
   getOrderisPay: async (req, res) => {
     const { id } = req.body;
     try {
-      const orders = await Order.find({ _id: id, isPay: true }).populate(
+      const orders = await Order.find({ _id: id, isAccept: 2 }).populate(
         "idProduct"
       );
       return res.status(200).json({ orders });
@@ -82,7 +131,7 @@ const orderCtrl = {
         idUser: id,
         byPoint: true,
         isPay: true,
-        isAccept: true,
+        isAccept: 1,
       }).populate("idProduct");
       return res.status(200).json({ orders });
     } catch (error) {
@@ -102,7 +151,7 @@ const orderCtrl = {
     const { id } = req.body;
     try {
       const order = await Order.findOne({ _id: id });
-      order.isAccept = true;
+      order.isAccept = 1;
       await order.save();
       return res.status(200).json({ success: true });
     } catch (error) {
@@ -113,7 +162,7 @@ const orderCtrl = {
     try {
       const orders = await Order.find({
         isPay: true,
-        isAccept: false,
+        isAccept: 0,
       }).populate("idProduct");
       return res.status(200).json({ orders });
     } catch (error) {

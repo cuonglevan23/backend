@@ -3,8 +3,15 @@ const mongoose = require("mongoose");
 
 const userCtrl = {
   createUser: async (req, res) => {
-    const { email, password, firstName, lastName, phoneNumber, avatar } =
-      req.body;
+    const {
+      email,
+      password,
+      firstName,
+      lastName,
+      phoneNumber,
+      avatar,
+      address,
+    } = req.body;
     try {
       const existEmail = await User.findOne({ email });
       if (existEmail) {
@@ -17,9 +24,10 @@ const userCtrl = {
           firstName,
           lastName,
           password,
-          phoneNumber,
+          phone_number: phoneNumber,
           avatar,
-          role: 0,
+          address,
+          role: 1,
         });
         await user.save();
 
