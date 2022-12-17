@@ -170,5 +170,16 @@ const orderCtrl = {
       return res.status(400).json({ success: false });
     }
   },
+  deniedOrder: async () => {
+    const { id } = req.body;
+    try {
+      const order = await Order.findById(id);
+      order.isAccept = 2;
+      await order.save();
+      return res.status(200).json({ success: true });
+    } catch (error) {
+      return res.status(400).json({ success: false });
+    }
+  },
 };
 module.exports = orderCtrl;

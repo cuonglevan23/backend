@@ -13,4 +13,5 @@ router.post("/accept-order", orderCtrl.acceptOrder);
 router.get("/:id", orderCtrl.getOrderbyPrice);
 router.post("/order-by-point", orderCtrl.getOrderbyPoint);
 router.delete("/:id", orderCtrl.deleteOrder);
+router.post("/deny-order", orderCtrl.acceptOrder)
 module.exports = router;
