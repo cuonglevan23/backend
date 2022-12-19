@@ -7,6 +7,7 @@ router.post("/admin-signin", userCtrl.adminSignIn);
 router.get("/not-department", userCtrl.showUserNotDepartment);
 router.post("/price", userCtrl.getPricebyId);
 router.get("/all-user", userCtrl.allUser);
+router.get("/admin", userCtrl.getAdmin);
 router.get("/admin-get-user", userCtrl.getUserNotAdmin);
 router.post("/add-point", userCtrl.addPoint);
 router.post("/decrement-point", userCtrl.decrementPoint);

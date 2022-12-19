@@ -211,6 +211,15 @@ const userCtrl = {
       console.log("error: ", error);
     }
   },
+  getAdmin: async (req, res) => {
+    try {
+      const users = await User.find({ role: 0 });
+      return res.status(200).json({ users });
+    } catch (error) {
+      console.log(error);
+      return res.status(400).json({ success: false });
+    }
+  },
   showUserBelongToDepartment: async (req, res) => {
     const q = req.params.departmentId;
     try {
